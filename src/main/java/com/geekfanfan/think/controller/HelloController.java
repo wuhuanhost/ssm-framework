@@ -4,17 +4,23 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 16:18:51
+ * @LastEditTime: 2020-11-19 17:00:37
  */
 package com.geekfanfan.think.controller;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSONObject;
+import com.geekfanfan.think.bean.User;
 import com.geekfanfan.think.job.PropUtils;
 import com.geekfanfan.think.job.QuartzManager;
 import com.geekfanfan.think.job.WorkJob;
+import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.utils.RedisUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
@@ -109,5 +115,18 @@ public class HelloController {
 			System.out.println("获取失败");
 		}
 		return redisUtil.get("user-info");
+	}
+
+	@Resource
+	private UserMapper userMapper;
+
+	@GetMapping("/mysql")
+	public String mysql() {
+		PageHelper.startPage(1, 1);
+		List<User> userList = userMapper.listAll();
+		PageInfo<User> pageInfo = new PageInfo<>(userList);
+		System.out.println(pageInfo);
+		return "";
+
 	}
 }
