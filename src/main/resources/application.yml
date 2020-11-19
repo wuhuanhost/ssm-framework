@@ -1,0 +1,13 @@
+spring:
+  thymeleaf:
+    cache: false
+    enabled: true
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+
+server:
+  #端口号
+  port: 8888
+  #项目名，如果不设定，默认是 /
+  context-path: /
