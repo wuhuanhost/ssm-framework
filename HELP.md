@@ -19,3 +19,26 @@ For further reference, please consider the following sections:
 ### 使用注解日志
 
 通过Lombok使用@Slf4j注解的时候，log对象会提示没有定义，所以需要在编辑器或IDE中安装lombok插件
+
+### swagger2自定义状态码
+
+`new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)`
+
+
+### 解决swagger异常AbstractSerializableParameter 
+
+```yml
+logging:
+  level:
+    io.swagger.models.parameters.AbstractSerializableParameter: error
+```
+
+参考：
+
+* https://blog.csdn.net/z_k_h/article/details/81875828
+* https://blog.csdn.net/qq_35735865/article/details/86711871
+ 
+
+### 文档地址
+
+http://192.168.1.123:8888/swagger-ui.html

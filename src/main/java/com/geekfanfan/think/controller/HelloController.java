@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-20 08:56:37
+ * @LastEditTime: 2020-11-20 15:18:48
  */
 package com.geekfanfan.think.controller;
 
@@ -18,10 +18,13 @@ import com.geekfanfan.think.job.PropUtils;
 import com.geekfanfan.think.job.QuartzManager;
 import com.geekfanfan.think.job.WorkJob;
 import com.geekfanfan.think.mapper.UserMapper;
+import com.geekfanfan.think.response.BaseResult;
+
 import com.geekfanfan.think.utils.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import org.apache.ibatis.jdbc.Null;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -31,16 +34,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@Api(tags = "HelloController", description = "测试文档生成")
 public class HelloController {
-	@GetMapping("/hello")
+	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	@ApiOperation(value = "测试hello world", notes = "notes......")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
 		String str = "<b>sdf</b>";
 		StringBuffer response = new StringBuffer(name);
@@ -49,8 +64,15 @@ public class HelloController {
 	}
 
 	// 返回json数据
-	@GetMapping("/json")
-	public JSONObject json() {
+	// @RequestMapping(value = "/json", method = RequestMethod.GET)
+	@GetMapping(value = "/json")
+	@ApiOperation(value = "测试返回json", produces = "application/json", httpMethod = "GET")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+			@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User", paramType = "query") })
+	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
+
+	public BaseResult<JSONObject> json() {
 		JSONObject userInfo = new JSONObject();
 		userInfo.put("name", "liming");
 		userInfo.put("age", "18");
@@ -60,8 +82,12 @@ public class HelloController {
 		userScore.put("chinese", 90);
 		userScore.put("english", 80);
 		userInfo.put("score", userScore);
-
-		return userInfo;
+		User user = new User();
+		user.setId(1);
+		user.setUsername("username");
+		user.setPassword("password");
+		// System.out.println(1 / 0);// 模拟异常处理
+		return BaseResult.success(userInfo);
 	}
 
 	/**
@@ -69,7 +95,8 @@ public class HelloController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/task")
+	@RequestMapping(value = "/task", method = RequestMethod.GET)
+	@ApiOperation("测试定时任务")
 	public String task() {
 		String command = PropUtils.getPropValue(
 				"E:\\workspace\\MyProject\\ssm-framework\\src\\main\\java\\com\\geekfanfan\\think\\job\\prop.properties",
@@ -94,7 +121,8 @@ public class HelloController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/redis")
+	@RequestMapping(value = "/redis", method = RequestMethod.GET)
+	@ApiOperation("测试redis")
 	public Object redis() {
 
 		JSONObject userInfo = new JSONObject();
@@ -123,13 +151,24 @@ public class HelloController {
 	@Resource
 	private UserMapper userMapper;
 
-	@GetMapping("/mysql")
+	@RequestMapping(value = "/mysql", method = RequestMethod.GET)
+	@ApiOperation("测试mysql")
 	public Object mysql() {
 		PageHelper.startPage(1, 1);
 		List<User> userList = userMapper.listAll();
 		PageInfo<User> pageInfo = new PageInfo<>(userList);
 		System.out.println(pageInfo);
 		return pageInfo;
+	}
 
+	@ApiOperation(value = "获取person json返回值", notes = "该操作不会展示嵌套的数据注释")
+	@PostMapping("/user")
+	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
+	public BaseResult<User> findPerson() {
+		User user = new User();
+		user.setId(1);
+		user.setUsername("username");
+		user.setPassword("password");
+		return BaseResult.success(user);
 	}
 }

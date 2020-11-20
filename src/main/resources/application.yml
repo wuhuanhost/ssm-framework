@@ -90,3 +90,18 @@ server:
   port: 8888
   #项目名，如果不设定，默认是 /
   context-path: /
+
+# Swagger界面内容配置
+swagger:
+  title: Bootan API接口文档
+  description: Bootan Api Documentation
+  version: 1.0.0
+  termsOfServiceUrl: https://www.geekfanfan.com
+  contact:
+    name: 极客凡凡
+    url: https://www.geekfanfan.com
+    email: wuhuanhost@163.com
+
+logging:
+  level:
+    io.swagger.models.parameters.AbstractSerializableParameter: error #解决swagger异常AbstractSerializableParameter 

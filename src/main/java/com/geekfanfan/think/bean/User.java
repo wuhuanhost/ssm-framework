@@ -1,12 +1,13 @@
 package com.geekfanfan.think.bean;
 
+import io.swagger.annotations.ApiModelProperty;
 /*
  * @Author: Dreamer
  * @Site: https://www.geekfanfan.com
  * @Date: 2020-11-19 16:50:54
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 16:57:14
+ * @LastEditTime: 2020-11-20 12:47:51
  */
 import lombok.Data;
 
@@ -20,16 +21,19 @@ public class User {
 	/**
 	 * 主键ID
 	 */
+	@ApiModelProperty(value = "id", required = true)
 	private Integer id;
 
 	/**
 	 * 用户名
 	 */
+	@ApiModelProperty(value = "用户名", required = true)
 	private String username;
 
 	/**
 	 * 密码
 	 */
+	@ApiModelProperty(value = "密码", required = true)
 	private String password;
 
 }

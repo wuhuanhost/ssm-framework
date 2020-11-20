@@ -6,7 +6,7 @@ package com.geekfanfan.think.config;
  * @Date: 2020-11-19 16:46:59
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 16:56:46
+ * @LastEditTime: 2020-11-20 10:01:15
  */
 import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.Bean;
