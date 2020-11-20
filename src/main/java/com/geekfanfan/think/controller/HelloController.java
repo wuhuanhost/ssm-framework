@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 17:00:37
+ * @LastEditTime: 2020-11-20 08:56:37
  */
 package com.geekfanfan.think.controller;
 
@@ -89,7 +89,7 @@ public class HelloController {
 	private RedisUtil redisUtil;
 
 	/**
-	 * redis
+	 * redis测试
 	 * 
 	 * 
 	 * @return
@@ -117,16 +117,19 @@ public class HelloController {
 		return redisUtil.get("user-info");
 	}
 
+	/**
+	 * mysql测试
+	 */
 	@Resource
 	private UserMapper userMapper;
 
 	@GetMapping("/mysql")
-	public String mysql() {
+	public Object mysql() {
 		PageHelper.startPage(1, 1);
 		List<User> userList = userMapper.listAll();
 		PageInfo<User> pageInfo = new PageInfo<>(userList);
 		System.out.println(pageInfo);
-		return "";
+		return pageInfo;
 
 	}
 }
