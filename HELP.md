@@ -42,3 +42,10 @@ logging:
 ### 文档地址
 
 http://192.168.1.123:8888/swagger-ui.html
+
+### Druid监控页面地址
+
+http://127.0.0.1:8888/druid
+
+> 用户名：root
+> 密 码：root

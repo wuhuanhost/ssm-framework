@@ -1,0 +1,1 @@
+[2020-11-23 16:30:46] WARN  org.springframework.core.log.CompositeLog 127 warn - For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath

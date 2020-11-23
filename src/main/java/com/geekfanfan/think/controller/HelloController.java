@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-23 15:30:48
+ * @LastEditTime: 2020-11-23 17:21:11
  */
 package com.geekfanfan.think.controller;
 
@@ -152,14 +152,16 @@ public class HelloController {
 	private UserMapper userMapper;
 
 	@RequestMapping(value = "/mysql", method = RequestMethod.GET)
-
-	@GetMapping(value = "/json")
 	@ApiOperation(value = "测试mysql", produces = "application/json", httpMethod = "GET")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
 			@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User", paramType = "query") })
 	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
 	public BaseResult<PageInfo<User>> mysql() {
+		log.debug("debug......");
+		log.info("info......");
+		log.warn("warn......");
+		log.error("error......");
 		PageHelper.startPage(1, 1);
 		List<User> userList = userMapper.listAll();
 		PageInfo<User> pageInfo = new PageInfo<>(userList);
