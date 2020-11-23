@@ -5,7 +5,7 @@
  * @Date: 2020-11-19 16:48:43
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 16:57:01
+ * @LastEditTime: 2020-11-23 15:20:13
  */
 package com.geekfanfan.think.mapper;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-	@Select({ "select * from user" })
+	// @Select({ "select * from user" })
 	List<User> listAll();
 
 	@Insert({ "insert into user(`username`, `password`) values(#{username}, #{password})" })

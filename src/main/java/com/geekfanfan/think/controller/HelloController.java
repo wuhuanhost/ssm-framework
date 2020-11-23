@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-20 15:18:48
+ * @LastEditTime: 2020-11-23 15:30:48
  */
 package com.geekfanfan.think.controller;
 
@@ -152,13 +152,19 @@ public class HelloController {
 	private UserMapper userMapper;
 
 	@RequestMapping(value = "/mysql", method = RequestMethod.GET)
-	@ApiOperation("测试mysql")
-	public Object mysql() {
+
+	@GetMapping(value = "/json")
+	@ApiOperation(value = "测试mysql", produces = "application/json", httpMethod = "GET")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+			@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User", paramType = "query") })
+	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
+	public BaseResult<PageInfo<User>> mysql() {
 		PageHelper.startPage(1, 1);
 		List<User> userList = userMapper.listAll();
 		PageInfo<User> pageInfo = new PageInfo<>(userList);
 		System.out.println(pageInfo);
-		return pageInfo;
+		return BaseResult.success(pageInfo);
 	}
 
 	@ApiOperation(value = "获取person json返回值", notes = "该操作不会展示嵌套的数据注释")

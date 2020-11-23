@@ -30,7 +30,9 @@ spring:
 
   #mybatis
   mybatis:
-    type-aliases-package: com.fxbin.mybaits.*
+    #mapper配置文件
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.geekfanfan.think.bean
     configuration:
       map-underscore-to-camel-case: true
       # 打印sql, 方便调试
@@ -104,4 +106,4 @@ swagger:
 
 logging:
   level:
-    io.swagger.models.parameters.AbstractSerializableParameter: error #解决swagger异常AbstractSerializableParameter 
+    io.swagger.models.parameters.AbstractSerializableParameter: error #解决swagger异常AbstractSerializableParameter
