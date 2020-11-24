@@ -64,7 +64,7 @@ spring:
         url-pattern: /* # 过滤所有url
         exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除一些不必要的url
         session-stat-enable: true # 开启session统计功能
-        session-stat-max-count: 1000 # session的最大个数,默认100
+        session-stat-max-count: 100 # session的最大个数,默认100
       ########## 配置StatViewServlet（监控页面），用于展示Druid的统计信息 ##########
       stat-view-servlet:
         enabled: true # 启用StatViewServlet
@@ -134,7 +134,7 @@ spring:
         #spring.redis.pool.min-idle=0
         min-idle: 0
 
-# 内置tomcat配置
+# 开发模式内置tomcat配置
 server:
   #端口号
   port: 8888
@@ -154,5 +154,6 @@ swagger:
 
 logging:
   level:
+    # 打印sql语句
     com.geekfanfan.think.mapper: debug
     io.swagger.models.parameters.AbstractSerializableParameter: error #解决swagger异常AbstractSerializableParameter
