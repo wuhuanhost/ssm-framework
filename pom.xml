@@ -31,11 +31,18 @@
 			</exclusions>
 		</dependency>
 
+		<!-- AOP依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -47,6 +54,7 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<!-- thymeleaf模板引擎依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -150,10 +158,18 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.9.2</version>
 		</dependency>
+		<!-- 一个漂亮的Swagger主题 -->
 		<dependency>
 			<groupId>com.github.xiaoymin</groupId>
 			<artifactId>swagger-bootstrap-ui</artifactId>
 			<version>1.9.6</version>
+		</dependency>
+
+		<!-- java hutool 工具包 文档地址：https://www.hutool.cn/docs/#/ -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.5.1</version>
 		</dependency>
 
 

@@ -9,6 +9,7 @@
 		<!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
 		<!-- %logger{36} 表示 Logger 名字最长36个字符 -->
 		<property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%l - %msg%n" />
+
 		<!-- 定义日志存储的路径 -->
 		<property name="FILE_PATH" value="E://javalogs//" />
 		<property name="FILE_NAME" value="think" />
@@ -29,24 +30,46 @@
 		</File>
 
 
+		<!-- 定义api访问日志-->
+		<RollingFile name="RollingFileApiLog" fileName="${FILE_PATH}/api.log" filePattern="${FILE_PATH}/${FILE_NAME}-api-log-debug-%d{yyyy-MM-dd}_%i.log.gz">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<!--interval属性用来指定多久滚动一次，默认是1 hour-->
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+			<!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+			<DefaultRolloverStrategy max="15" />
+		</RollingFile>
+
+
 		<!--处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中-->
 		<!--打印出DEBUG级别日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
 		<RollingFile name="RollingFileDebug" fileName="${FILE_PATH}/debug.log" filePattern="${FILE_PATH}/${FILE_NAME}-DEBUG-%d{yyyy-MM-dd}_%i.log.gz">
+			<!-- <ThresholdFilter level="debug" onMismatch="ACCEPT" onMatch="DENY" /> -->
 			<Filters>
-				<ThresholdFilter level="DEBUG" />
-				<ThresholdFilter level="DEBUG" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="TRACE" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
-			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n" />
+			<PatternLayout pattern="${LOG_PATTERN}" />
 			<Policies>
 				<SizeBasedTriggeringPolicy size="500 MB" />
 				<TimeBasedTriggeringPolicy />
 			</Policies>
 		</RollingFile>
 
+
 		<!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
 		<RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/info.log" filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz">
 			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
-			<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<!-- 只输出info -->
+			<Filters>
+				<ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY" />
+			</Filters>
 			<PatternLayout pattern="${LOG_PATTERN}" />
 			<Policies>
 				<!--interval属性用来指定多久滚动一次，默认是1 hour-->
@@ -60,7 +83,12 @@
 		<!-- 这个会打印出所有的warn及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
 		<RollingFile name="RollingFileWarn" fileName="${FILE_PATH}/warn.log" filePattern="${FILE_PATH}/${FILE_NAME}-WARN-%d{yyyy-MM-dd}_%i.log.gz">
 			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
-			<ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<!-- 只输出警告 -->
+			<Filters>
+				<ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY" />
+			</Filters>
 			<PatternLayout pattern="${LOG_PATTERN}" />
 			<Policies>
 				<!--interval属性用来指定多久滚动一次，默认是1 hour-->
@@ -74,7 +102,11 @@
 		<!-- 这个会打印出所有的error及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
 		<RollingFile name="RollingFileError" fileName="${FILE_PATH}/error.log" filePattern="${FILE_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log.gz">
 			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
-			<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" /> -->
+
+			<!-- 只匹配error -->
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+
 			<PatternLayout pattern="${LOG_PATTERN}" />
 			<Policies>
 				<!--interval属性用来指定多久滚动一次，默认是1 hour-->
@@ -108,6 +140,12 @@
 			<appender-ref ref="RollingFileWarn" />
 			<appender-ref ref="RollingFileError" />
 		</root>
+
+		<!-- 记录api日志 -->
+		<logger name="com.geekfanfan.think.aop.WebLogAspect" level="debug" additivity="false">
+			<appender-ref ref="RollingFileApiLog" />
+		</logger>
+
 
 		<!--记录druid-sql的记录-->
 		<logger name="druid.sql.Statement" level="debug" additivity="false">

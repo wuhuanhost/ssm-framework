@@ -1,4 +1,4 @@
-package com.geekfanfan.think.bean;
+package com.geekfanfan.think.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 /*
@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @Date: 2020-11-19 16:50:54
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-20 12:47:51
+ * @LastEditTime: 2020-11-25 10:41:40
  */
 import lombok.Data;
 

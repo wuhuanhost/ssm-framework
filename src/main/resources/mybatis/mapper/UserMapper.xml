@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geekfanfan.think.mapper.UserMapper">
-	<select id="listAll" resultType="com.geekfanfan.think.bean.User">
+    <select id="listAll" resultType="com.geekfanfan.think.entity.User">
         SELECT * FROM user
     </select>
 </mapper>

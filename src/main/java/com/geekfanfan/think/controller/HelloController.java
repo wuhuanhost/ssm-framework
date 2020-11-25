@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-23 17:21:11
+ * @LastEditTime: 2020-11-25 10:42:12
  */
 package com.geekfanfan.think.controller;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSONObject;
-import com.geekfanfan.think.bean.User;
+import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.job.PropUtils;
 import com.geekfanfan.think.job.QuartzManager;
 import com.geekfanfan.think.job.WorkJob;
@@ -170,7 +170,7 @@ public class HelloController {
 	}
 
 	@ApiOperation(value = "获取person json返回值", notes = "该操作不会展示嵌套的数据注释")
-	@PostMapping("/user")
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
 	public BaseResult<User> findPerson() {
 		User user = new User();

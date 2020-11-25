@@ -5,11 +5,11 @@
  * @Date: 2020-11-19 16:48:43
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-23 15:20:13
+ * @LastEditTime: 2020-11-25 11:05:07
  */
 package com.geekfanfan.think.mapper;
 
-import com.geekfanfan.think.bean.User;
+import com.geekfanfan.think.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
