@@ -4,19 +4,20 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 10:42:12
+ * @LastEditTime: 2020-11-25 16:16:20
  */
 package com.geekfanfan.think.controller;
 
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import com.alibaba.fastjson.JSONObject;
 import com.geekfanfan.think.entity.User;
-import com.geekfanfan.think.job.PropUtils;
-import com.geekfanfan.think.job.QuartzManager;
-import com.geekfanfan.think.job.WorkJob;
+import com.geekfanfan.think.utils.job.PropUtils;
+import com.geekfanfan.think.utils.job.QuartzManager;
+import com.geekfanfan.think.utils.job.WorkJob;
 import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.response.BaseResult;
 
@@ -33,8 +34,12 @@ import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +53,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -99,10 +105,10 @@ public class HelloController {
 	@ApiOperation("测试定时任务")
 	public String task() {
 		String command = PropUtils.getPropValue(
-				"E:\\workspace\\MyProject\\ssm-framework\\src\\main\\java\\com\\geekfanfan\\think\\job\\prop.properties",
+				"E:\\workspace\\MyProject\\ssm-framework\\src\\main\\java\\com\\geekfanfan\\think\\utils\\job\\prop.properties",
 				"command");
 		String cron = PropUtils.getPropValue(
-				"E:\\workspace\\MyProject\\ssm-framework\\src\\main\\java\\com\\geekfanfan\\think\\job\\prop.properties",
+				"E:\\workspace\\MyProject\\ssm-framework\\src\\main\\java\\com\\geekfanfan\\think\\utils\\job\\prop.properties",
 				"cron");
 		System.out.println("cron时间表达式:" + cron);
 		System.out.println("command执行命令：" + command);
@@ -170,7 +176,7 @@ public class HelloController {
 	}
 
 	@ApiOperation(value = "获取person json返回值", notes = "该操作不会展示嵌套的数据注释")
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
 	public BaseResult<User> findPerson() {
 		User user = new User();
@@ -179,4 +185,23 @@ public class HelloController {
 		user.setPassword("password");
 		return BaseResult.success(user);
 	}
+
+	@ApiOperation(value = "添加用户", notes = "该操作不会展示嵌套的数据注释", produces = "application/json", httpMethod = "POST")
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
+	public BaseResult<Integer> addUser(@Valid @RequestBody User user, BindingResult result) {
+		System.out.println("-----------");
+		System.out.println(result);
+		System.out.println("-----------");
+		if (result.hasErrors()) {
+			List<ObjectError> errorList = result.getAllErrors();
+			for (ObjectError error : errorList) {
+				System.out.println(error.getDefaultMessage());
+			}
+		}
+		log.info("用户名：" + user.getUsername() + "   密码：" + user.getPassword());
+		Integer i = userMapper.insert(user);
+		return BaseResult.success(i);
+	}
+
 }

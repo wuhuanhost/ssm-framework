@@ -1,4 +1,4 @@
-package com.geekfanfan.think.job;
+package com.geekfanfan.think.utils.job;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;

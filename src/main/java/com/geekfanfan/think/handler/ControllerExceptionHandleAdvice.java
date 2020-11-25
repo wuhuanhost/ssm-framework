@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-23 09:35:58
+ * @LastEditTime: 2020-11-25 17:32:27
  */
 package com.geekfanfan.think.handler;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.geekfanfan.think.response.BaseResult;
+import com.geekfanfan.think.utils.exception.RequestParamsException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,7 +37,8 @@ class ControllerExceptionHandleAdvice {
 			log.info("修改返回状态值为200");
 			res.setStatus(HttpStatus.OK.value());
 		}
-
+		System.out.println("===============================");
+		System.out.println(e);
 		if (e instanceof NullPointerException) {
 			log.error("代码00：" + e.getMessage(), e);
 			return BaseResult.error(10000, "发生空指针异常");
@@ -46,6 +48,9 @@ class ControllerExceptionHandleAdvice {
 		} else if (e instanceof SQLException) {
 			log.error("代码02：" + e.getMessage(), e);
 			return BaseResult.error(10002, "数据库访问异常");
+		} else if (e instanceof RequestParamsException) {
+			log.error("代码03：" + "参数校验异常");
+			return BaseResult.error(10004, e.getMessage());
 		} else {
 			log.error("代码99：" + e.getMessage(), e);
 			return BaseResult.error(10003, " 服务器代码发生异常,请联系管理员");

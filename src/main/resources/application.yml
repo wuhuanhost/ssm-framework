@@ -101,6 +101,29 @@ swagger:
     url: https://www.geekfanfan.com
     email: wuhuanhost@163.com
 
+# Swagger ui knife4j界面内容配置
+knife4j:
+  enable: true
+  documents:
+    - group: 1.2.x
+      name: 测试自定义标题分组
+      locations: classpath:md/*
+  setting:
+    enableSwaggerModels: true
+    enableDocumentManage: true
+    enableHost: false
+    enableHostText: http://localhost:8888
+    enableRequestCache: true
+    enableFilterMultipartApis: false
+    enableFilterMultipartApiMethodType: POST
+    language: zh-CN
+  cors: false
+  production: false
+  basic:
+    enable: false
+    username: test
+    password: 123
+
 logging:
   level:
     # 打印sql语句

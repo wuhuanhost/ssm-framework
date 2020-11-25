@@ -4,9 +4,9 @@
  * @Date: 2020-11-19 10:59:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 13:59:24
+ * @LastEditTime: 2020-11-25 14:44:31
  */
-package com.geekfanfan.think.job;
+package com.geekfanfan.think.utils.job;
 
 import org.quartz.*;
 

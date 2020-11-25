@@ -4,7 +4,7 @@
  * @Date: 2020-11-25 08:54:48
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 10:35:09
+ * @LastEditTime: 2020-11-25 17:29:42
  */
 package com.geekfanfan.think.aop;
 
@@ -42,7 +42,7 @@ import com.geekfanfan.think.bean.WebLog;
  */
 @Aspect
 @Component
-@Order(1)
+@Order(2)
 @Slf4j
 public class WebLogAspect {
 

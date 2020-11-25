@@ -4,9 +4,9 @@
  * @Date: 2020-11-19 11:02:34
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-19 14:40:43
+ * @LastEditTime: 2020-11-25 14:44:13
  */
-package com.geekfanfan.think.job;
+package com.geekfanfan.think.utils.job;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
