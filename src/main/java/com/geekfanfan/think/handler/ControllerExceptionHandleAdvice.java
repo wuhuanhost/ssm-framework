@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 17:32:27
+ * @LastEditTime: 2020-11-26 11:13:42
  */
 package com.geekfanfan.think.handler;
 
@@ -13,11 +13,17 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.geekfanfan.think.response.BaseResult;
-import com.geekfanfan.think.utils.exception.RequestParamsException;
+import com.geekfanfan.think.utils.response.BaseResult;
+import com.geekfanfan.think.utils.response.IErrorCode;
+import com.geekfanfan.think.utils.exception.ApiException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,19 +47,56 @@ class ControllerExceptionHandleAdvice {
 		System.out.println(e);
 		if (e instanceof NullPointerException) {
 			log.error("代码00：" + e.getMessage(), e);
-			return BaseResult.error(10000, "发生空指针异常");
+			return BaseResult.error("发生空指针异常");
 		} else if (e instanceof IllegalArgumentException) {
 			log.error("代码01：" + e.getMessage(), e);
-			return BaseResult.error(10001, "请求参数类型不匹配");
+			return BaseResult.error("请求参数类型不匹配");
 		} else if (e instanceof SQLException) {
 			log.error("代码02：" + e.getMessage(), e);
-			return BaseResult.error(10002, "数据库访问异常");
-		} else if (e instanceof RequestParamsException) {
+			return BaseResult.error("数据库访问异常");
+		} else if (e instanceof ApiException) {
 			log.error("代码03：" + "参数校验异常");
-			return BaseResult.error(10004, e.getMessage());
+			return BaseResult.error(e.getMessage());
 		} else {
 			log.error("代码99：" + e.getMessage(), e);
-			return BaseResult.error(10003, " 服务器代码发生异常,请联系管理员");
+			return BaseResult.error("服务器代码发生异常,请联系管理员");
 		}
+	}
+
+	@ResponseBody
+	@ExceptionHandler(value = MethodArgumentNotValidException.class)
+	public BaseResult handleValidException(MethodArgumentNotValidException e) {
+		BindingResult bindingResult = e.getBindingResult();
+		String message = null;
+		if (bindingResult.hasErrors()) {
+			FieldError fieldError = bindingResult.getFieldError();
+			if (fieldError != null) {
+				message = fieldError.getField() + fieldError.getDefaultMessage();
+			}
+		}
+		return BaseResult.error(message);
+	}
+
+	@ResponseBody
+	@ExceptionHandler(value = BindException.class)
+	public BaseResult handleValidException(BindException e) {
+		BindingResult bindingResult = e.getBindingResult();
+		String message = null;
+		if (bindingResult.hasErrors()) {
+			FieldError fieldError = bindingResult.getFieldError();
+			if (fieldError != null) {
+				message = fieldError.getField() + fieldError.getDefaultMessage();
+			}
+		}
+		return BaseResult.error(message);
+	}
+
+	@ResponseBody
+	@ExceptionHandler(value = ApiException.class)
+	public BaseResult handle(ApiException e) {
+		if (e.getErrorCode() != null) {
+			return BaseResult.error((IErrorCode) e.getErrorCode());
+		}
+		return BaseResult.error(e.getMessage());
 	}
 }

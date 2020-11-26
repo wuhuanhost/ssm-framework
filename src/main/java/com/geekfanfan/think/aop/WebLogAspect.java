@@ -4,7 +4,7 @@
  * @Date: 2020-11-25 08:54:48
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 17:29:42
+ * @LastEditTime: 2020-11-26 09:20:17
  */
 package com.geekfanfan.think.aop;
 
@@ -42,7 +42,7 @@ import com.geekfanfan.think.bean.WebLog;
  */
 @Aspect
 @Component
-@Order(2)
+@Order(1)
 @Slf4j
 public class WebLogAspect {
 
@@ -77,7 +77,7 @@ public class WebLogAspect {
 		long endTime = System.currentTimeMillis();
 		String urlStr = request.getRequestURL().toString();
 		webLog.setBasePath(StrUtil.removeSuffix(urlStr, URLUtil.url(urlStr).getPath()));
-		webLog.setIp(WebLogAspect.getIpAddr(request));
+		webLog.setIp(getIpAddr(request));
 		webLog.setMethod(request.getMethod());
 		webLog.setParameter(getParameter(method, joinPoint.getArgs()));
 		webLog.setResult(result);
@@ -87,6 +87,7 @@ public class WebLogAspect {
 		webLog.setUrl(request.getRequestURL().toString());
 		// webLog.setIp(WebLogAspect.getIpAddr(request));
 		log.debug("{}", JSONUtil.parse(webLog));
+		// System.out.println(result);
 		return result;
 	}
 
@@ -129,7 +130,7 @@ public class WebLogAspect {
 	 * @param request
 	 * @return
 	 */
-	public static String getIpAddr(HttpServletRequest request) {
+	public String getIpAddr(HttpServletRequest request) {
 		String ip = request.getHeader("X-Forwarded-For");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");

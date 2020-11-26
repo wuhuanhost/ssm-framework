@@ -2,9 +2,11 @@ package com.geekfanfan.think.aop;
 
 import java.util.List;
 
-import com.geekfanfan.think.utils.exception.RequestParamsException;
+import com.geekfanfan.think.utils.response.BaseResult;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Aspect
 @Component
-@Order(1)
+@Order(2)
 @Slf4j
 public class ValidParamAspect {
 
@@ -29,8 +31,8 @@ public class ValidParamAspect {
 	public void aspect() {
 	}
 
-	@Before("aspect()")
-	public void doBefore(JoinPoint jp) throws Throwable {
+	@Around("aspect()")
+	public Object doAround(ProceedingJoinPoint jp) throws Throwable {
 		Object[] args = jp.getArgs();
 		if (args != null && args.length > 1) {
 			// 取出第2个参数
@@ -45,13 +47,16 @@ public class ValidParamAspect {
 					for (FieldError fieldError : errors) {
 						log.error(fieldError.getField() + ":" + fieldError.getDefaultMessage());
 						errorMsg.append(fieldError.getField() + ":" + fieldError.getDefaultMessage());
+
 					}
+					return BaseResult.error(errorMsg.toString());
 					// List<ObjectError> errors = bindingResult.getAllErrors();
 					// System.out.println(">>>>>>>>>>>>" + errors.get(0).getDefaultMessage());
-					throw new RequestParamsException(errorMsg.toString());
+					// throw new RequestParamsException(errorMsg.toString());
 				}
 			}
 		}
+		return jp.proceed();
 	}
 
 }

@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 16:16:20
+ * @LastEditTime: 2020-11-26 09:43:29
  */
 package com.geekfanfan.think.controller;
 
@@ -19,8 +19,8 @@ import com.geekfanfan.think.utils.job.PropUtils;
 import com.geekfanfan.think.utils.job.QuartzManager;
 import com.geekfanfan.think.utils.job.WorkJob;
 import com.geekfanfan.think.mapper.UserMapper;
-import com.geekfanfan.think.response.BaseResult;
-
+import com.geekfanfan.think.utils.response.BaseResult;
+import com.geekfanfan.think.services.UserService;
 import com.geekfanfan.think.utils.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -154,8 +154,8 @@ public class HelloController {
 	/**
 	 * mysql测试
 	 */
-	@Resource
-	private UserMapper userMapper;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/mysql", method = RequestMethod.GET)
 	@ApiOperation(value = "测试mysql", produces = "application/json", httpMethod = "GET")
@@ -169,7 +169,7 @@ public class HelloController {
 		log.warn("warn......");
 		log.error("error......");
 		PageHelper.startPage(1, 1);
-		List<User> userList = userMapper.listAll();
+		List<User> userList = userService.getAllUser();
 		PageInfo<User> pageInfo = new PageInfo<>(userList);
 		System.out.println(pageInfo);
 		return BaseResult.success(pageInfo);
@@ -185,6 +185,9 @@ public class HelloController {
 		user.setPassword("password");
 		return BaseResult.success(user);
 	}
+
+	@Resource
+	UserMapper userMapper;
 
 	@ApiOperation(value = "添加用户", notes = "该操作不会展示嵌套的数据注释", produces = "application/json", httpMethod = "POST")
 	@RequestMapping(value = "/user", method = RequestMethod.POST)

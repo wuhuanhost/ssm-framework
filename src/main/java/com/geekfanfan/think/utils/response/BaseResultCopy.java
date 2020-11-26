@@ -4,9 +4,9 @@
  * @Date: 2020-11-20 12:34:28
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-20 15:11:05
+ * @LastEditTime: 2020-11-26 10:13:36
  */
-package com.geekfanfan.think.response;
+package com.geekfanfan.think.utils.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 //和以前唯一不一样的地方就是加了一个泛型T
 @Data
 @ApiModel("通用返回对象") // 注释这个类的信息
-public class BaseResult<T> implements Serializable {
+public class BaseResultCopy<T> implements Serializable {
 	// 解释各字段的意思
 	@ApiModelProperty(value = "返回码", dataType = "Integer", example = "200")
 	private int code;
@@ -32,15 +32,16 @@ public class BaseResult<T> implements Serializable {
 	private T data;
 
 	// 几种构造方法
-	public BaseResult() {
+	public BaseResultCopy() {
 	}
 
-	public BaseResult(Integer status, String msg) {
+	public BaseResultCopy(Integer status, String msg) {
 		this.code = status;
 		this.msg = msg;
+
 	}
 
-	public BaseResult(Integer status, String msg, T data) {
+	public BaseResultCopy(Integer status, String msg, T data) {
 		this.code = status;
 		this.msg = msg;
 		if (data != null) {
@@ -49,20 +50,20 @@ public class BaseResult<T> implements Serializable {
 	}
 
 	// 静态方法要使用泛型参数的话，要声明其为泛型方法
-	public static <T> BaseResult<T> success(T data) {
-		return new BaseResult<T>(200, messageMap.get(200), data);
+	public static <T> BaseResultCopy<T> success(T data) {
+		return new BaseResultCopy<T>(200, messageMap.get(200), data);
 	}
 
-	public static <T> BaseResult<T> success(Integer status, String msg, T data) {
-		return new BaseResult<T>(status, messageMap.get(status), data);
+	public static <T> BaseResultCopy<T> success(Integer status, String msg, T data) {
+		return new BaseResultCopy<T>(status, messageMap.get(status), data);
 	}
 
-	public static <T> BaseResult<T> error(Integer status, String msg) {
+	public static <T> BaseResultCopy<T> error(Integer status, String msg) {
 		String message = msg;
 		if (message == null || message.equals("")) {
 			message = messageMap.get(status);
 		}
-		return new BaseResult<T>(status, message, null);
+		return new BaseResultCopy<T>(status, message, null);
 	}
 
 	private static Map<Integer, String> messageMap = Maps.newHashMap();
