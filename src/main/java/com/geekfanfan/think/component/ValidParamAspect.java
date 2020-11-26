@@ -3,6 +3,7 @@ package com.geekfanfan.think.component;
 import java.util.List;
 
 import com.geekfanfan.think.utils.response.BaseResult;
+import com.geekfanfan.think.utils.response.ResultCode;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -47,9 +48,9 @@ public class ValidParamAspect {
 					for (FieldError fieldError : errors) {
 						log.error(fieldError.getField() + ":" + fieldError.getDefaultMessage());
 						errorMsg.append(fieldError.getField() + ":" + fieldError.getDefaultMessage());
-
 					}
-					return BaseResult.error(errorMsg.toString());
+
+					return BaseResult.error(ResultCode.VALIDATE_FAILED, errorMsg.toString());
 					// List<ObjectError> errors = bindingResult.getAllErrors();
 					// System.out.println(">>>>>>>>>>>>" + errors.get(0).getDefaultMessage());
 					// throw new RequestParamsException(errorMsg.toString());
