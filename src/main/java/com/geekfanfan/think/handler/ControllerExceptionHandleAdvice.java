@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 11:13:42
+ * @LastEditTime: 2020-11-26 11:49:01
  */
 package com.geekfanfan.think.handler;
 
@@ -17,6 +17,7 @@ import com.geekfanfan.think.utils.response.BaseResult;
 import com.geekfanfan.think.utils.response.IErrorCode;
 import com.geekfanfan.think.utils.exception.ApiException;
 
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -56,6 +57,9 @@ class ControllerExceptionHandleAdvice {
 			return BaseResult.error("数据库访问异常");
 		} else if (e instanceof ApiException) {
 			log.error("代码03：" + "参数校验异常");
+			return BaseResult.error(e.getMessage());
+		} else if (e instanceof RedisConnectionFailureException) {
+			log.error("代码04：" + "redis连接异常", e);
 			return BaseResult.error(e.getMessage());
 		} else {
 			log.error("代码99：" + e.getMessage(), e);

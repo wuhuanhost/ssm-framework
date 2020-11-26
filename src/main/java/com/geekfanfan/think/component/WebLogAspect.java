@@ -6,7 +6,7 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2020-11-26 09:20:17
  */
-package com.geekfanfan.think.aop;
+package com.geekfanfan.think.component;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
