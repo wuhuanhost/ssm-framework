@@ -4,15 +4,14 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 09:43:29
+ * @LastEditTime: 2020-12-01 17:53:24
  */
 package com.geekfanfan.think.controller;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
-
+import javax.validation.constraints.Min;
 import com.alibaba.fastjson.JSONObject;
 import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.utils.job.PropUtils;
@@ -22,43 +21,31 @@ import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.utils.response.BaseResult;
 import com.geekfanfan.think.services.UserService;
 import com.geekfanfan.think.utils.RedisUtil;
+import com.geekfanfan.think.utils.annotation.Log;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
-import org.apache.ibatis.jdbc.Null;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.SchedulerException;
-import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
 @Api(tags = "HelloController", description = "测试文档生成")
+@Validated
 public class HelloController {
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	@ApiOperation(value = "测试hello world", notes = "notes......")
@@ -205,6 +192,24 @@ public class HelloController {
 		log.info("用户名：" + user.getUsername() + "   密码：" + user.getPassword());
 		Integer i = userMapper.insert(user);
 		return BaseResult.success(i);
+	}
+
+	@ApiOperation(value = "转账事务测试", notes = "该操作不会展示嵌套的数据注释", produces = "application/json", httpMethod = "GET")
+	@RequestMapping(value = "/transfer", method = RequestMethod.GET)
+	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
+	public BaseResult<Boolean> transferMoney(
+			@Min(value = 1, message = "转账用户id不正确") @RequestParam(name = "fromUserId") int fromUserId,
+			@Min(value = 1, message = "被转账用户id不正确") @RequestParam(name = "toUserId") int toUserId,
+			@Min(value = 1, message = "金额必须大于0") @RequestParam(name = "money") double money) {
+		System.out.println(fromUserId + "------------1-" + toUserId + "---------------------2-" + money);
+		Boolean b;
+		try {
+			b = userService.transferMoney(fromUserId, toUserId, money);
+		} catch (Exception e) {
+			log.error("{}" + e.getMessage(), e);
+			return BaseResult.error(e.getMessage());
+		}
+		return BaseResult.success(b);
 	}
 
 }

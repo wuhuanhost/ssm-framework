@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 11:49:01
+ * @LastEditTime: 2020-12-01 17:28:26
  */
 package com.geekfanfan.think.handler;
 
@@ -12,6 +12,8 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Constraint;
+import javax.validation.ConstraintViolationException;
 
 import com.geekfanfan.think.utils.response.BaseResult;
 import com.geekfanfan.think.utils.response.IErrorCode;
@@ -77,6 +79,16 @@ class ControllerExceptionHandleAdvice {
 			if (fieldError != null) {
 				message = fieldError.getField() + fieldError.getDefaultMessage();
 			}
+		}
+		return BaseResult.error(message);
+	}
+
+	@ResponseBody
+	@ExceptionHandler(value = ConstraintViolationException.class)
+	public BaseResult handleMethodArgumentNotValidException(ConstraintViolationException e) {
+		String message = e.getMessage();
+		if (message != null) {
+			message = e.getMessage();
 		}
 		return BaseResult.error(message);
 	}

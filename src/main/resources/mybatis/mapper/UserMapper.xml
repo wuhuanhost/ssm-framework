@@ -4,4 +4,18 @@
     <select id="listAll" resultType="com.geekfanfan.think.entity.User">
         SELECT * FROM user
     </select>
+
+    <!-- 转入 -->
+    <update id="transferIn">
+        update user 
+        set money = money + #{money }
+        where id= #{id}
+    </update>
+
+    <!-- 转出 -->
+    <update id="transferOut">
+        update user 
+        set money = money - #{money }
+        where id= #{id}
+    </update>
 </mapper>

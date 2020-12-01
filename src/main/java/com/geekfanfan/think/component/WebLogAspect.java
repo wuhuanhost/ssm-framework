@@ -4,7 +4,7 @@
  * @Date: 2020-11-25 08:54:48
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 09:20:17
+ * @LastEditTime: 2020-12-01 18:01:17
  */
 package com.geekfanfan.think.component;
 
@@ -50,6 +50,14 @@ public class WebLogAspect {
 	public void webLog() {
 	}
 
+	/**
+	 * 65 * 设置操作异常切入点记录异常日志 扫描所有controller包下操作 66
+	 */
+
+	@Pointcut("execution(* com.geekfanfan.think.controller..*.*(..))")
+	public void operExceptionLogPoinCut() {
+	}
+
 	@Before("webLog()")
 	public void doBefore(JoinPoint joinPoint) throws Throwable {
 	}
@@ -86,9 +94,32 @@ public class WebLogAspect {
 		webLog.setUri(request.getRequestURI());
 		webLog.setUrl(request.getRequestURL().toString());
 		// webLog.setIp(WebLogAspect.getIpAddr(request));
+		log.debug("===========================================记录API调用信息开始=========================================");
 		log.debug("{}", JSONUtil.parse(webLog));
-		// System.out.println(result);
+		log.debug("===========================================记录API调用信息结束=========================================");
+		// System.out.println(webLog);
 		return result;
+	}
+
+	/**
+	 * 131 * 异常返回通知，用于拦截异常日志信息 连接点抛出异常后执行 132 * 133 * @param joinPoint 切入点 134
+	 * * @param e 异常信息 135
+	 */
+
+	// 参考:https://www.cnblogs.com/wm-dv/p/11735828.html
+	@AfterThrowing(pointcut = "operExceptionLogPoinCut()", throwing = "e")
+	public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
+		long startTime = System.currentTimeMillis();
+		// 获取当前请求对象
+
+		// webLog.setIp(WebLogAspect.getIpAddr(request));
+		System.out
+				.println("===========================================记录API调用信息开始=========================================");
+		System.out.println(e);
+		System.out
+				.println("===========================================记录API调用信息结束=========================================");
+		// System.out.println(webLog);
+		return;
 	}
 
 	/**

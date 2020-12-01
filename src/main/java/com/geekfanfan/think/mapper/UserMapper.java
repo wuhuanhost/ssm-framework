@@ -5,7 +5,7 @@
  * @Date: 2020-11-19 16:48:43
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 15:56:25
+ * @LastEditTime: 2020-12-01 10:06:51
  */
 package com.geekfanfan.think.mapper;
 
@@ -24,7 +24,13 @@ public interface UserMapper {
 	// @Select({ "select * from user" })
 	List<User> listAll();
 
-	@Insert({ "insert into user(`username`, `password`) values(#{username}, #{password})" })
+	// 转入
+	boolean transferIn(int id, double money);
+
+	// 转出
+	boolean transferOut(int id, double money);
+
+	@Insert({ "insert into user(`username`, `password`,	`money`) values(#{username}, #{password}, #{money})" })
 	int insert(User user);
 
 	@Delete({ "delete from user where id = #{userId}" })

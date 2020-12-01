@@ -1,5 +1,7 @@
 package com.geekfanfan.think.entity;
 
+import java.math.BigInteger;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -11,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @Date: 2020-11-19 16:50:54
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-27 17:27:26
+ * @LastEditTime: 2020-12-01 09:37:40
  */
 import lombok.Data;
 
@@ -25,7 +27,7 @@ public class User {
 	/**
 	 * 主键ID
 	 */
-	@ApiModelProperty(value = "id", required = true)
+	@ApiModelProperty(value = "id", required = false)
 	private Integer id;
 
 	/**
@@ -42,5 +44,8 @@ public class User {
 	@ApiModelProperty(value = "密码", required = true)
 	@NotBlank(message = "密码不能为空")
 	private String password;
+
+	@ApiModelProperty(value = "余额", required = false)
+	private double money;
 
 }
