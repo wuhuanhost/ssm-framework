@@ -4,7 +4,7 @@
  * @Date: 2020-11-26 09:35:52
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-02 10:12:32
+ * @LastEditTime: 2020-12-02 14:44:31
  */
 package com.geekfanfan.think.services.impl;
 
@@ -12,10 +12,7 @@ import java.util.List;
 
 import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.mapper.UserMapper;
-import com.geekfanfan.think.utils.response.ResultCode;
 import com.geekfanfan.think.services.UserService;
-import com.geekfanfan.think.utils.exception.Asserts;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,13 +41,16 @@ public class UserServiceImpl implements UserService {
 		boolean b1 = userMapper.transferOut(fromUserId, money);
 		// 模拟失败
 
-		int b = 0;
-		try {
-			b = 10 / 0;
-		} catch (Exception e) {
-			Asserts.error("被除数不能为0！");
-		}
-
+		// int b = 0;
+		// try {
+		// b = 10 / 0;
+		// } catch (Exception e) {
+		// Asserts.error("被除数不能为0！");
+		// }
+		int a = 5;
+		double b = a / 2;
+		System.out.println(a);
+		System.out.println(b);
 		// Asserts.error("发生异常事务回滚,此次转账失败！");
 
 		// System.out.println(b);

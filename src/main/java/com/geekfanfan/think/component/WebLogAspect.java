@@ -4,7 +4,7 @@
  * @Date: 2020-11-25 08:54:48
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-02 10:10:45
+ * @LastEditTime: 2020-12-02 14:01:16
  */
 package com.geekfanfan.think.component;
 
@@ -132,7 +132,8 @@ public class WebLogAspect {
 		webLog.setMethod(request.getMethod());
 		webLog.setParameter(getParameter(method, joinPoint.getArgs()));
 		webLog.setResult(BaseResult.validateFaild(e.getMessage()));
-		webLog.setException(Base.getStackTrace(e));
+		// webLog.setException(Base.stackTraceToString(e.getClass().getName(),
+		// e.getMessage(), e.getStackTrace()));
 		webLog.setStartTime(startTime);
 		webLog.setUri(request.getRequestURI());
 		webLog.setUrl(request.getRequestURL().toString());

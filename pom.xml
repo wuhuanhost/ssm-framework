@@ -48,6 +48,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+		<!-- Junit依赖 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- 热部署工具，修改代码自动更新 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
