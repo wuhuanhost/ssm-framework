@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-01 17:28:26
+ * @LastEditTime: 2020-12-02 10:01:15
  */
 package com.geekfanfan.think.handler;
 
@@ -83,6 +83,7 @@ class ControllerExceptionHandleAdvice {
 		return BaseResult.error(message);
 	}
 
+	// get参数异常
 	@ResponseBody
 	@ExceptionHandler(value = ConstraintViolationException.class)
 	public BaseResult handleMethodArgumentNotValidException(ConstraintViolationException e) {
@@ -90,7 +91,7 @@ class ControllerExceptionHandleAdvice {
 		if (message != null) {
 			message = e.getMessage();
 		}
-		return BaseResult.error(message);
+		return BaseResult.validateFaild(message);
 	}
 
 	@ResponseBody

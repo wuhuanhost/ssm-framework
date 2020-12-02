@@ -4,7 +4,7 @@
  * @Date: 2020-11-26 09:59:55
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 11:13:33
+ * @LastEditTime: 2020-12-02 09:30:38
  */
 package com.geekfanfan.think.utils.response;
 
@@ -19,7 +19,7 @@ public enum ResultCode implements IErrorCode {
 	// ==========================失败，业务相关====================
 	FAILED(1000, "失败"),
 	// 参数检验失败
-	VALIDATE_FAILED(10001, "参数检验失败"),
+	VALIDATE_FAILED(501, "参数检验失败"),
 	// 授权相关
 	UNAUTHORIZED(401, "暂未登录或token已经过期"),
 	// 权限相关

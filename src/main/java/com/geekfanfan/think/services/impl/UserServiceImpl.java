@@ -4,7 +4,7 @@
  * @Date: 2020-11-26 09:35:52
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-01 16:48:27
+ * @LastEditTime: 2020-12-02 10:12:32
  */
 package com.geekfanfan.think.services.impl;
 
@@ -44,7 +44,13 @@ public class UserServiceImpl implements UserService {
 		boolean b1 = userMapper.transferOut(fromUserId, money);
 		// 模拟失败
 
-		// int b = 10 / 0;
+		int b = 0;
+		try {
+			b = 10 / 0;
+		} catch (Exception e) {
+			Asserts.error("被除数不能为0！");
+		}
+
 		// Asserts.error("发生异常事务回滚,此次转账失败！");
 
 		// System.out.println(b);

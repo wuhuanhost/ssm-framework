@@ -4,7 +4,7 @@
  * @Date: 2020-11-25 08:54:48
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-01 18:01:17
+ * @LastEditTime: 2020-12-02 10:10:45
  */
 package com.geekfanfan.think.component;
 
@@ -36,6 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.geekfanfan.think.bean.WebLog;
+import com.geekfanfan.think.utils.exception.Base;
+import com.geekfanfan.think.utils.response.BaseResult;
+import com.geekfanfan.think.utils.response.IErrorCode;
+import com.geekfanfan.think.utils.response.ResultCode;
 
 /**
  * 统一日志处理切面 Created by xc on 190903.
@@ -111,15 +115,32 @@ public class WebLogAspect {
 	public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
 		long startTime = System.currentTimeMillis();
 		// 获取当前请求对象
-
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		WebLog webLog = new WebLog();
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		// 获取切入点所在的方法
+		Method method = signature.getMethod();
+		if (method.isAnnotationPresent(ApiOperation.class)) {
+			ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
+			webLog.setDescription(apiOperation.value());
+		}
+		long endTime = System.currentTimeMillis();
+		String urlStr = request.getRequestURL().toString();
+		webLog.setBasePath(StrUtil.removeSuffix(urlStr, URLUtil.url(urlStr).getPath()));
+		webLog.setIp(getIpAddr(request));
+		webLog.setMethod(request.getMethod());
+		webLog.setParameter(getParameter(method, joinPoint.getArgs()));
+		webLog.setResult(BaseResult.validateFaild(e.getMessage()));
+		webLog.setException(Base.getStackTrace(e));
+		webLog.setStartTime(startTime);
+		webLog.setUri(request.getRequestURI());
+		webLog.setUrl(request.getRequestURL().toString());
 		// webLog.setIp(WebLogAspect.getIpAddr(request));
-		System.out
-				.println("===========================================记录API调用信息开始=========================================");
-		System.out.println(e);
-		System.out
-				.println("===========================================记录API调用信息结束=========================================");
+		log.debug("===========================================记录API调用信息开始=========================================");
+		log.debug("{}", JSONUtil.parse(webLog));
+		log.debug("===========================================记录API调用信息结束=========================================");
 		// System.out.println(webLog);
-		return;
 	}
 
 	/**

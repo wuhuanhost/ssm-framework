@@ -58,4 +58,8 @@ public class WebLog {
 	 * 请求返回的结果
 	 */
 	private Object result;
+	/**
+	 * 异常信息
+	 */
+	private String exception;
 }

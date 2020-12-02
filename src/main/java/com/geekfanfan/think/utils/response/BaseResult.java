@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 12:34:28
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 11:45:18
+ * @LastEditTime: 2020-12-02 09:56:45
  */
 package com.geekfanfan.think.utils.response;
 
@@ -92,6 +92,15 @@ public class BaseResult<T> implements Serializable {
 	 */
 	public static <T> BaseResult<T> error() {
 		return error(ResultCode.ERROR);
+	}
+
+	/**
+	 * 参数校验失败返回
+	 * 
+	 * @param msg 提示信息
+	 */
+	public static <T> BaseResult<T> validateFaild(String msg) {
+		return new BaseResult<T>(ResultCode.VALIDATE_FAILED.getCode(), msg, null);
 	}
 
 }

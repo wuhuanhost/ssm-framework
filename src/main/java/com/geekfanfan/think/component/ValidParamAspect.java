@@ -50,7 +50,7 @@ public class ValidParamAspect {
 						errorMsg.append(fieldError.getField() + ":" + fieldError.getDefaultMessage());
 					}
 
-					return BaseResult.error(ResultCode.VALIDATE_FAILED, errorMsg.toString());
+					return BaseResult.validateFaild(errorMsg.toString());
 					// List<ObjectError> errors = bindingResult.getAllErrors();
 					// System.out.println(">>>>>>>>>>>>" + errors.get(0).getDefaultMessage());
 					// throw new RequestParamsException(errorMsg.toString());
