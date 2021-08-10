@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-02 09:57:32
+ * @LastEditTime: 2021-08-10 10:32:54
  */
 package com.geekfanfan.think.controller;
 
@@ -91,6 +91,7 @@ public class HelloController {
 	@RequestMapping(value = "/task", method = RequestMethod.GET)
 	@ApiOperation("测试定时任务")
 	public String task() {
+		// 这里应该用相对地址
 		String command = PropUtils.getPropValue(
 				"E:\\workspace\\MyProject\\ssm-framework\\src\\main\\java\\com\\geekfanfan\\think\\utils\\job\\prop.properties",
 				"command");
