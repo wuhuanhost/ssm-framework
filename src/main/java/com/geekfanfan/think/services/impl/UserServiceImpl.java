@@ -4,7 +4,7 @@
  * @Date: 2020-11-26 09:35:52
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-01-26 11:31:15
+ * @LastEditTime: 2021-08-10 11:05:44
  */
 package com.geekfanfan.think.services.impl;
 
@@ -13,6 +13,8 @@ import java.util.List;
 import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.services.UserService;
+import com.geekfanfan.think.utils.exception.Asserts;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +59,8 @@ public class UserServiceImpl implements UserService {
 
 		// 转入
 		boolean b2 = userMapper.transferIn(toUserId, money);
+
+		System.out.println(b1 + "-------------------" + b2);
 
 		return b1 && b2;
 	}

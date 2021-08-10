@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-08-10 10:32:54
+ * @LastEditTime: 2021-08-10 11:40:51
  */
 package com.geekfanfan.think.controller;
 
@@ -19,6 +19,7 @@ import com.geekfanfan.think.utils.job.QuartzManager;
 import com.geekfanfan.think.utils.job.WorkJob;
 import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.utils.response.BaseResult;
+import com.geekfanfan.think.utils.response.ResultCode;
 import com.geekfanfan.think.services.UserService;
 import com.geekfanfan.think.utils.RedisUtil;
 import com.geekfanfan.think.utils.annotation.Log;
@@ -209,6 +210,9 @@ public class HelloController {
 		} catch (Exception e) {
 			log.error("{}" + e.getMessage(), e);
 			return BaseResult.error(e.getMessage());
+		}
+		if (!b) {
+			return BaseResult.error(ResultCode.FAILED, "转账失败");
 		}
 		return BaseResult.success(b);
 	}

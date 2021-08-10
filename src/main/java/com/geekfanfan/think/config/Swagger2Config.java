@@ -6,7 +6,7 @@ package com.geekfanfan.think.config;
  * @Date: 2020-11-20 09:54:29
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-20 11:10:02
+ * @LastEditTime: 2021-08-10 15:08:37
  */
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,8 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+// import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,8 @@ import java.util.List;
  */
 @Slf4j
 @Configuration
-@EnableSwagger2
+// @EnableSwagger2
+@EnableSwagger2WebMvc
 public class Swagger2Config {
 
     @Value("${swagger.title}")
