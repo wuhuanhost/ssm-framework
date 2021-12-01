@@ -10,10 +10,10 @@ package com.geekfanfan.think.services.impl;
 
 import java.util.List;
 
+import com.geekfanfan.think.common.exception.Asserts;
 import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.services.UserService;
-import com.geekfanfan.think.utils.exception.Asserts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

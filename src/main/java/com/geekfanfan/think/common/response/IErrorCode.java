@@ -1,4 +1,4 @@
-package com.geekfanfan.think.utils.response;
+package com.geekfanfan.think.common.response;
 
 public interface IErrorCode {
 	int getCode();

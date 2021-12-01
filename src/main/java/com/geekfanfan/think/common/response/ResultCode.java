@@ -6,7 +6,7 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2021-08-10 11:40:27
  */
-package com.geekfanfan.think.utils.response;
+package com.geekfanfan.think.common.response;
 
 /**
  * 枚举了一些常用API操作码 Created by macro on 2019/4/19.

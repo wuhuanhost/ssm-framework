@@ -1,4 +1,4 @@
-package com.geekfanfan.think.utils;
+package com.geekfanfan.think.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundListOperations;

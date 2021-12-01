@@ -6,7 +6,7 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2020-12-02 10:01:15
  */
-package com.geekfanfan.think.handler;
+package com.geekfanfan.think.common.handler;
 
 import java.sql.SQLException;
 
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Constraint;
 import javax.validation.ConstraintViolationException;
 
-import com.geekfanfan.think.utils.response.BaseResult;
-import com.geekfanfan.think.utils.response.IErrorCode;
-import com.geekfanfan.think.utils.exception.ApiException;
+import com.geekfanfan.think.common.exception.ApiException;
+import com.geekfanfan.think.common.response.BaseResult;
+import com.geekfanfan.think.common.response.IErrorCode;
 
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;

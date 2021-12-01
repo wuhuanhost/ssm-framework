@@ -6,7 +6,7 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2020-12-02 13:57:34
  */
-package com.geekfanfan.think.utils.exception;
+package com.geekfanfan.think.common.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

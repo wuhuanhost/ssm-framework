@@ -36,10 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.geekfanfan.think.bean.WebLog;
-import com.geekfanfan.think.utils.exception.Base;
-import com.geekfanfan.think.utils.response.BaseResult;
-import com.geekfanfan.think.utils.response.IErrorCode;
-import com.geekfanfan.think.utils.response.ResultCode;
+import com.geekfanfan.think.common.exception.Base;
+import com.geekfanfan.think.common.response.BaseResult;
+import com.geekfanfan.think.common.response.IErrorCode;
+import com.geekfanfan.think.common.response.ResultCode;
 
 /**
  * 统一日志处理切面 Created by xc on 190903.

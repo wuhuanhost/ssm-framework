@@ -2,8 +2,8 @@ package com.geekfanfan.think.component;
 
 import java.util.List;
 
-import com.geekfanfan.think.utils.response.BaseResult;
-import com.geekfanfan.think.utils.response.ResultCode;
+import com.geekfanfan.think.common.response.BaseResult;
+import com.geekfanfan.think.common.response.ResultCode;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

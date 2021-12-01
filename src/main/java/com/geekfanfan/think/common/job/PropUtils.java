@@ -6,7 +6,7 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2020-11-25 14:44:13
  */
-package com.geekfanfan.think.utils.job;
+package com.geekfanfan.think.common.job;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

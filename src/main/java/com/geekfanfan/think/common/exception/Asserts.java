@@ -6,9 +6,9 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2020-11-26 11:06:15
  */
-package com.geekfanfan.think.utils.exception;
+package com.geekfanfan.think.common.exception;
 
-import com.geekfanfan.think.utils.response.IErrorCode;
+import com.geekfanfan.think.common.response.IErrorCode;
 
 /**
  * 断言处理类，用于抛出各种API异常 Created by macro on 2020/2/27.

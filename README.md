@@ -4,7 +4,7 @@
  * @Date: 2020-11-19 08:51:27
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-08-10 10:41:55
+ * @LastEditTime: 2021-12-01 17:33:18
 -->
 
 #ssm-framework
@@ -50,9 +50,9 @@
     │  │              │       UserServiceImpl.java
     │  │              │
     │  │              │
-    │  │              ├─utils(工具类)
+    │  │              ├─util(工具类)
     │  │              │  │  RedisUtil.java
-    │  │              │  │
+    │  │              │  │  Base64Util.java
     │  │              │  └─wechat
     │  │              │          SHA1.java
     │  │              │

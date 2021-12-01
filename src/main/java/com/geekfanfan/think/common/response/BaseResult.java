@@ -4,9 +4,9 @@
  * @Date: 2020-11-20 12:34:28
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-02 09:56:45
+ * @LastEditTime: 2021-12-01 15:09:09
  */
-package com.geekfanfan.think.utils.response;
+package com.geekfanfan.think.common.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,7 +15,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Map;
 
-import com.google.common.collect.Maps;
+// import com.google.common.collect.Maps;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 

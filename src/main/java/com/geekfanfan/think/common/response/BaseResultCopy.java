@@ -6,16 +6,17 @@
  * @LastEditors: Dreamer
  * @LastEditTime: 2020-11-26 10:13:36
  */
-package com.geekfanfan.think.utils.response;
+package com.geekfanfan.think.common.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.collect.Maps;
+// import com.google.common.collect.Maps;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -66,7 +67,8 @@ public class BaseResultCopy<T> implements Serializable {
 		return new BaseResultCopy<T>(status, message, null);
 	}
 
-	private static Map<Integer, String> messageMap = Maps.newHashMap();
+	// private static Map<Integer, String> messageMap = Maps.newHashMap();
+	private static Map<Integer, String> messageMap = new HashMap();
 	// 初始化状态码与文字说明
 	static {
 		/* 成功状态码 */

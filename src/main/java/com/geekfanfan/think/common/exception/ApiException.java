@@ -4,11 +4,11 @@
  * @Date: 2020-11-25 16:42:56
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-26 11:13:15
+ * @LastEditTime: 2021-12-01 17:34:45
  */
-package com.geekfanfan.think.utils.exception;
+package com.geekfanfan.think.common.exception;
 
-import com.geekfanfan.think.utils.response.IErrorCode;
+import com.geekfanfan.think.common.response.IErrorCode;
 
 /*
    自定义异常类
@@ -19,7 +19,7 @@ import com.geekfanfan.think.utils.response.IErrorCode;
 // public class ApiException extends RuntimeException { // 运行时异常
 
 /**
- * 自定义API异常 Created by macro on 2020/2/27.
+ * 自定义API异常 Created by macro on 2020/2/27. 运行时异常
  */
 public class ApiException extends RuntimeException {
 	/**
