@@ -4,7 +4,7 @@
  * @Date: 2020-11-26 09:59:55
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-08-10 11:40:27
+ * @LastEditTime: 2021-12-02 10:42:14
  */
 package com.geekfanfan.think.common.response;
 
@@ -18,6 +18,8 @@ public enum ResultCode implements IErrorCode {
 	ERROR(500, "操作失败"),
 	// ==========================失败，业务相关====================
 	FAILED(1000, "失败"),
+	TRANSFER_FAILED(1001, "转账失败1231313"),
+	// ================================================
 	// 参数检验失败
 	VALIDATE_FAILED(501, "参数检验失败"),
 	// 授权相关

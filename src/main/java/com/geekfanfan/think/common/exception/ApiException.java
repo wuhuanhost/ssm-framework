@@ -4,15 +4,14 @@
  * @Date: 2020-11-25 16:42:56
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-01 17:34:45
+ * @LastEditTime: 2021-12-02 10:23:04
  */
 package com.geekfanfan.think.common.exception;
 
 import com.geekfanfan.think.common.response.IErrorCode;
 
 /*
-   自定义异常类
-
+  自定义统一异常处理，便于解耦，可在拦截器，控制器，业务层使用
 */
 
 // public class ApiException extends Exception { // 编译时异常

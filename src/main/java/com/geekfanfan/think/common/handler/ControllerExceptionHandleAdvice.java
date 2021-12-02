@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-12-02 10:01:15
+ * @LastEditTime: 2021-12-02 10:48:09
  */
 package com.geekfanfan.think.common.handler;
 
@@ -18,6 +18,7 @@ import javax.validation.ConstraintViolationException;
 import com.geekfanfan.think.common.exception.ApiException;
 import com.geekfanfan.think.common.response.BaseResult;
 import com.geekfanfan.think.common.response.IErrorCode;
+import com.geekfanfan.think.common.response.ResultCode;
 
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
@@ -34,14 +35,13 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 /**
- * controller类统一异常处理
+ * controller类统一异常拦截处理
  */
 class ControllerExceptionHandleAdvice {
 
 	@ExceptionHandler
 	public BaseResult handler(HttpServletRequest req, HttpServletResponse res, Exception e) {
 		log.info("Restful Http请求发生异常...");
-
 		if (res.getStatus() == HttpStatus.BAD_REQUEST.value()) {
 			log.info("修改返回状态值为200");
 			res.setStatus(HttpStatus.OK.value());
@@ -59,7 +59,7 @@ class ControllerExceptionHandleAdvice {
 			return BaseResult.error("数据库访问异常");
 		} else if (e instanceof ApiException) {
 			log.error("代码03：" + "参数校验异常");
-			return BaseResult.error(e.getMessage());
+			return BaseResult.error(ResultCode.TRANSFER_FAILED);
 		} else if (e instanceof RedisConnectionFailureException) {
 			log.error("代码04：" + "redis连接异常", e);
 			return BaseResult.error(e.getMessage());
@@ -111,9 +111,13 @@ class ControllerExceptionHandleAdvice {
 	@ResponseBody
 	@ExceptionHandler(value = ApiException.class)
 	public BaseResult handle(ApiException e) {
+		log.error("===========================================");
+		log.error(e.getMessage() + " " + e.getErrorCode());
+		log.error("===========================================");
 		if (e.getErrorCode() != null) {
 			return BaseResult.error((IErrorCode) e.getErrorCode());
 		}
-		return BaseResult.error(e.getMessage());
+
+		return BaseResult.error(e.getErrorCode());
 	}
 }

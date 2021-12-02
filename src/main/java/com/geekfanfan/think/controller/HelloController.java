@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-08-10 11:40:51
+ * @LastEditTime: 2021-12-02 11:05:07
  */
 package com.geekfanfan.think.controller;
 
@@ -202,9 +202,10 @@ public class HelloController {
 	public BaseResult<Boolean> transferMoney(
 			@Min(value = 1, message = "转账用户id不正确") @RequestParam(name = "fromUserId") int fromUserId,
 			@Min(value = 1, message = "被转账用户id不正确") @RequestParam(name = "toUserId") int toUserId,
-			@Min(value = 1, message = "金额必须大于0") @RequestParam(name = "money") double money) {
+			@Min(value = 1, message = "金额必须大于0") @RequestParam(name = "money") double money) throws Exception {
 		System.out.println(fromUserId + "------------1-" + toUserId + "---------------------2-" + money);
 		Boolean b;
+		log.error("..............................");
 		try {
 			b = userService.transferMoney(fromUserId, toUserId, money);
 		} catch (Exception e) {

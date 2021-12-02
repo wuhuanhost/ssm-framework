@@ -4,7 +4,7 @@
  * @Date: 2020-11-19 08:51:27
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-01 17:33:18
+ * @LastEditTime: 2021-12-02 11:23:57
 -->
 
 #ssm-framework
@@ -101,3 +101,7 @@
 > http://localhost:8888/druid/index.html
 > 用户名：root
 > 密码：root
+
+### 日志
+
+日志默认位置不在项目目录下，而在`E://javalogs//`目录，如果需要修改日志位置，修改`/resources/log4j2-spring.xml`文件的第`第14行`即可
