@@ -4,7 +4,7 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-03 14:57:22
+ * @LastEditTime: 2021-12-03 16:51:48
  */
 package com.geekfanfan.think.controller;
 
@@ -163,7 +163,6 @@ public class HelloController {
 			@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User", paramType = "query") })
 	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
 	public BaseResult<IPage<User>> mysql() {
-
 		// 分页数据（获取第2页，每个页面1条数据）
 		Page<User> userPage = new Page<>(2, 1);
 		// 分页之后的数据

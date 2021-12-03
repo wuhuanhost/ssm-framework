@@ -6,7 +6,7 @@ package com.geekfanfan.think.config;
  * @Date: 2020-11-20 09:54:29
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-03 15:49:47
+ * @LastEditTime: 2021-12-03 16:52:11
  */
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
