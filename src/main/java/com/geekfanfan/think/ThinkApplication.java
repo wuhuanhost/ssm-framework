@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
+@MapperScan("com.geekfanfan.think.mapper")
 public class ThinkApplication {
 
 	public static void main(String[] args) {

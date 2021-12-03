@@ -1,14 +1,31 @@
 spring:
-  # 数据源
+  ############################################################
+  #
+  # 配置数据源信息
+  #
+  ############################################################
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # type: com.zaxxer.hikari.HikariDataSource #数据远类型为HicariCP
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.123:3306/test1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true
     username: root
     password: root
-    # url: jdbc:mysql://192.168.123:3306/test1?useUnicode=true&characterEncoding=utf8
-    url: jdbc:mysql://192.168.1.123:3306/test1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     continue-on-error: true
     sql-script-encoding: UTF-8
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
+    ## hikari数据连接池配置 start==========================================================================================
+    # hikari:
+    #   connection-timeout: 30000 # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+    #   minimum-idle: 5 # 最小连接数
+    #   maximum-pool-size: 20 # 最大连接数
+    #   auto-commit: true # 自动提交
+    #   idle-timeout: 600000 # 连接超时的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+    #   pool-name: DateSourceHikariCP # 连接池名字
+    #   max-lifetime: 1800000 # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
+    #   connection-test-query: SELECT 1
+    ##hikari 数据源 end==============================================================================================
+
+    ## druid数据连接池配置 start==========================================================================================
     druid:
       # 配置初始化大小、最小、最大
       initial-size: 5
@@ -20,7 +37,7 @@ spring:
       time-between-eviction-runs-millis: 2000
       # 配置一个连接在池中最小生存的时间，单位是毫秒
       min-evictable-idle-time-millis: 600000
-      max-evictable-idle-time-millis: 900000
+      # max-evictable-idle-time-millis: 900000
       # 用来测试连接是否可用的SQL语句,默认值每种数据库都不相同,这是mysql
       validationQuery: select 1
       # 应用向连接池申请连接，并且testOnBorrow为false时，连接池将会判断连接是否处于空闲状态，如果是，则验证这条连接是否可用
@@ -74,6 +91,7 @@ spring:
         login-password: root
         allow: 127.0.0.1 # 允许访问的地址，如果allow没有配置或者为空，则允许所有访问
         deny:
+    ## Druid 配置end==============================================================================================
 
   # thymeleaf模板设置
   thymeleaf:
@@ -83,14 +101,59 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+############################################################
+#
+# mybatis
+#
+############################################################
+# mybatis: #mapper配置文件
+#   # config-locations: classpath:mybatis/config.xml
+#   # mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+#   # type-aliases-package: com.geekfanfan.think.entity
+#   # configuration:
+#   #   map-underscore-to-camel-case: true
+#   #   cache-enabled: false
+#   #   # 打印sql, 方便调试
+#   #   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#   #   use-generated-keys: true
+#   #   default-statement-timeout: 60
+#   #   default-fetch-size: 100
+
+mybatis-plus: #mybatis-plus 配置文件
+  config-locations: classpath:mybatis/config.xml
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+  type-aliases-package: com.geekfanfan.think.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    # 打印sql, 方便调试
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    use-generated-keys: true
+    default-statement-timeout: 60
+    default-fetch-size: 100
+
+  logging: #mybaties日志配置
+    level:
+      # 打印sql语句
+      com.geekfanfan.think.mapper: debug
+      # io.swagger.models.parameters.AbstractSerializableParameter: error #解决swagger异常AbstractSerializableParameter
+
+############################################################
+#
 # 开发模式内置tomcat配置
+#
+#############################################################
 server:
   #端口号
   port: 8888
   #项目名，如果不设定，默认是 /
   context-path: /
 
+############################################################
+#
 # Swagger界面内容配置
+#
+############################################################
 swagger:
   title: Bootan API接口文档
   description: Bootan Api Documentation
@@ -124,28 +187,11 @@ knife4j:
     username: test
     password: 123
 
-logging:
-  level:
-    # 打印sql语句
-    com.geekfanfan.think.mapper: debug
-    io.swagger.models.parameters.AbstractSerializableParameter: error #解决swagger异常AbstractSerializableParameter
-
-  #mybatis
-mybatis:
-  #mapper配置文件
-  config-locations: classpath:mybatis/config.xml
-  mapper-locations: classpath:mybatis/mapper/*Mapper.xml
-  type-aliases-package: com.geekfanfan.think.entity
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    # 打印sql, 方便调试
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    use-generated-keys: true
-    default-statement-timeout: 60
-    default-fetch-size: 100
-
-  ## Redis 配置
+############################################################
+#
+# Redis 配置
+#
+############################################################
 redis:
   ## 连接超时时间（毫秒）
   timeout: 1200
@@ -181,14 +227,3 @@ redis:
       ## 连接池中的最小空闲连接
       #spring.redis.pool.min-idle=0
       min-idle: 0
-
-##jwt配置
-audience:
-  # 代表这个JWT的接收对象,存入audience
-  clientId: 098f6bcd4621d373cade4e832627b4f6
-  # 密钥, 经过Base64加密, 可自行替换
-  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
-  # JWT的签发主体，存入issuer
-  name: restapiuser
-  # 过期时间，时间戳
-  expiresSecond: 172800

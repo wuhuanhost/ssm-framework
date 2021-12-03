@@ -4,16 +4,21 @@
  * @Date: 2020-11-18 17:18:37
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-02 11:05:07
+ * @LastEditTime: 2021-12-03 14:57:22
  */
 package com.geekfanfan.think.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
+import javax.print.DocFlavor.STRING;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import com.alibaba.fastjson.JSONObject;
-import com.geekfanfan.think.common.annotation.Log;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.geekfanfan.think.common.job.PropUtils;
 import com.geekfanfan.think.common.job.QuartzManager;
 import com.geekfanfan.think.common.job.WorkJob;
@@ -22,15 +27,17 @@ import com.geekfanfan.think.common.response.ResultCode;
 import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.mapper.UserMapper;
 import com.geekfanfan.think.services.UserService;
+import com.geekfanfan.think.util.JWTUtils;
 import com.geekfanfan.think.util.RedisUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+// import com.github.pagehelper.PageHelper;
+// import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +50,15 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
+@RestController // 这种注解相当于@Controll注解然后在每个方法前面加上@ResponseBody
 @Slf4j
 @Api(tags = "HelloController", description = "测试文档生成")
 @Validated
 public class HelloController {
+
+	@Autowired
+	private UserService userService; // 注入services
+
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	@ApiOperation(value = "测试hello world", notes = "notes......")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -131,8 +142,9 @@ public class HelloController {
 		userInfo.put("score", userScore);
 
 		boolean b = redisUtil.set("user-info", userInfo);
+		boolean b1 = redisUtil.set("user-info1", userInfo, 20);// 20秒之后缓存过期
 		System.out.println(redisUtil.get("user-info"));
-		if (b) {
+		if (b && b1) {
 			System.out.println(redisUtil.get("user-info"));
 		} else {
 			System.out.println("获取失败");
@@ -143,8 +155,6 @@ public class HelloController {
 	/**
 	 * mysql测试
 	 */
-	@Autowired
-	private UserService userService;
 
 	@RequestMapping(value = "/mysql", method = RequestMethod.GET)
 	@ApiOperation(value = "测试mysql", produces = "application/json", httpMethod = "GET")
@@ -152,16 +162,18 @@ public class HelloController {
 			@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
 			@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User", paramType = "query") })
 	@ApiResponses({ @ApiResponse(code = 200, message = "success"), @ApiResponse(code = 400, message = "Invalid Order") })
-	public BaseResult<PageInfo<User>> mysql() {
-		log.debug("debug......");
-		log.info("info......");
-		log.warn("warn......");
-		log.error("error......");
-		PageHelper.startPage(1, 1);
-		List<User> userList = userService.getAllUser();
-		PageInfo<User> pageInfo = new PageInfo<>(userList);
-		System.out.println(pageInfo);
-		return BaseResult.success(pageInfo);
+	public BaseResult<IPage<User>> mysql() {
+
+		// 分页数据（获取第2页，每个页面1条数据）
+		Page<User> userPage = new Page<>(2, 1);
+		// 分页之后的数据
+		IPage<User> userIPage = userService.getAllUser(userPage);
+		System.out.println("总页数： " + userIPage.getPages());
+		System.out.println("总记录数： " + userIPage.getTotal());
+		// 迭代分页数据
+		userIPage.getRecords().forEach(System.out::println);
+
+		return BaseResult.success(userIPage);
 	}
 
 	@ApiOperation(value = "获取person json返回值", notes = "该操作不会展示嵌套的数据注释")
@@ -218,4 +230,41 @@ public class HelloController {
 		return BaseResult.success(b);
 	}
 
+	/**
+	 * 登录
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/login123", method = RequestMethod.GET)
+	public BaseResult<String> login(@RequestParam String username, @RequestParam String password) {
+		if (username.equals("admin") && password.equals("123456")) {
+			User u = new User();
+			u.setPassword(password);
+			u.setUsername(username);
+			u.setId(123456789);
+			return BaseResult.success(JWTUtils.getToken(u));
+		}
+
+		return BaseResult.success("");
+	}
+
+	/**
+	 * 登录之后进入首页的方法
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public BaseResult<HashMap<String, String>> Dashboard(@RequestHeader String token) throws Exception {
+		Integer uid = JWTUtils.getUserId(token);
+		log.info(token);
+		log.info("------------------------------");
+		log.info(uid + "+++++++++++");
+		log.info("------------------------------");
+		HashMap mp = new HashMap<String, String>();
+		mp.put(uid, uid);
+		mp.put("user-info", redisUtil.get("user-info1"));// 获取redis中的用户信息
+		return BaseResult.success(mp);
+	}
 }

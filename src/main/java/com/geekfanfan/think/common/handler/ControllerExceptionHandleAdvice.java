@@ -4,7 +4,7 @@
  * @Date: 2020-11-20 15:04:23
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-02 10:48:09
+ * @LastEditTime: 2021-12-03 15:31:54
  */
 package com.geekfanfan.think.common.handler;
 
@@ -26,19 +26,22 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RestControllerAdvice
+@ControllerAdvice
 @Slf4j
 /**
  * controller类统一异常拦截处理
  */
 class ControllerExceptionHandleAdvice {
 
+	@ResponseBody
 	@ExceptionHandler
 	public BaseResult handler(HttpServletRequest req, HttpServletResponse res, Exception e) {
 		log.info("Restful Http请求发生异常...");
@@ -47,7 +50,7 @@ class ControllerExceptionHandleAdvice {
 			res.setStatus(HttpStatus.OK.value());
 		}
 		System.out.println("===============================");
-		System.out.println(e);
+		// System.out.println(e);
 		if (e instanceof NullPointerException) {
 			log.error("代码00：" + e.getMessage(), e);
 			return BaseResult.error("发生空指针异常");
@@ -57,16 +60,23 @@ class ControllerExceptionHandleAdvice {
 		} else if (e instanceof SQLException) {
 			log.error("代码02：" + e.getMessage(), e);
 			return BaseResult.error("数据库访问异常");
-		} else if (e instanceof ApiException) {
-			log.error("代码03：" + "参数校验异常");
-			return BaseResult.error(ResultCode.TRANSFER_FAILED);
-		} else if (e instanceof RedisConnectionFailureException) {
+		}
+		// else if (e instanceof ApiException) {
+		// log.error("代码03：" + "参数校验异常");
+		// return BaseResult.error(ResultCode.TRANSFER_FAILED);
+		// }
+		else if (e instanceof RedisConnectionFailureException) {
 			log.error("代码04：" + "redis连接异常", e);
 			return BaseResult.error(e.getMessage());
-		} else {
-			log.error("代码99：" + e.getMessage(), e);
-			return BaseResult.error("服务器代码发生异常,请联系管理员");
+		} else if (e instanceof MissingServletRequestParameterException) {
+			log.error("代码05：" + e.getMessage(), e);
+			return BaseResult.error("缺少必要的参数：" + e.getMessage());
 		}
+		// else {
+		// log.error("代码99：" + e.getMessage(), e);
+		// return BaseResult.error("服务器代码发生异常,请联系管理员");
+		// }
+		return null;
 	}
 
 	@ResponseBody
@@ -111,13 +121,12 @@ class ControllerExceptionHandleAdvice {
 	@ResponseBody
 	@ExceptionHandler(value = ApiException.class)
 	public BaseResult handle(ApiException e) {
-		log.error("===========================================");
-		log.error(e.getMessage() + " " + e.getErrorCode());
-		log.error("===========================================");
+		// log.error("===========================================");
+		// log.error(e.getMessage() + " " + e.getErrorCode());
+		// log.error("===========================================");
 		if (e.getErrorCode() != null) {
 			return BaseResult.error((IErrorCode) e.getErrorCode());
 		}
-
-		return BaseResult.error(e.getErrorCode());
+		return BaseResult.error(e.getMessage());
 	}
 }

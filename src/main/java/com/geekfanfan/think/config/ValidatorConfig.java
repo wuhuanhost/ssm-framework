@@ -4,7 +4,7 @@
  * @Date: 2020-11-25 17:14:45
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2020-11-25 17:15:38
+ * @LastEditTime: 2021-12-02 14:08:06
  */
 package com.geekfanfan.think.config;
 
@@ -20,7 +20,7 @@ import javax.validation.ValidatorFactory;
  * 如果想要配置第二种模式，需要添加如下配置类：
  */
 @Configuration
-public class ValidatorConf {
+public class ValidatorConfig {
 	@Bean
 	public Validator validator() {
 		ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(true)

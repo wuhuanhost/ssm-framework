@@ -4,14 +4,15 @@
  * @Date: 2020-11-26 09:35:52
  * @Email: wuhuanhost@163.com
  * @LastEditors: Dreamer
- * @LastEditTime: 2021-12-02 11:09:56
+ * @LastEditTime: 2021-12-03 15:38:01
  */
 package com.geekfanfan.think.services.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.geekfanfan.think.common.exception.Asserts;
-import com.geekfanfan.think.common.response.IErrorCode;
 import com.geekfanfan.think.common.response.ResultCode;
 import com.geekfanfan.think.entity.User;
 import com.geekfanfan.think.mapper.UserMapper;
@@ -21,19 +22,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 
 	@Override
-	public List<User> getAllUser() {
+	public IPage<User> getAllUser(Page<?> page) {
 		// 获取所有的用户
 		// 通过此方法抛出异常，会被全局捕获返回给前端
 		// Asserts.error(ResultCode.SUCCESS);
 		// System.out.println(10 / 0);
 
-		return userMapper.listAll();
+		return userMapper.listAll(page);
 	}
 
 	// 事务测试
@@ -65,7 +69,7 @@ public class UserServiceImpl implements UserService {
 		boolean b2 = userMapper.transferIn(toUserId, money);
 
 		System.out.println(b1 + "-------------------" + b2);
-
+		log.error("d");
 		return b1 && b2;
 	}
 

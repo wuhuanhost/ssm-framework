@@ -18,7 +18,7 @@ public enum ResultCode implements IErrorCode {
 	ERROR(500, "操作失败"),
 	// ==========================失败，业务相关====================
 	FAILED(1000, "失败"),
-	TRANSFER_FAILED(1001, "转账失败1231313"),
+	TRANSFER_FAILED(1001, "转账失败"),
 	// ================================================
 	// 参数检验失败
 	VALIDATE_FAILED(501, "参数检验失败"),
