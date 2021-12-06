@@ -215,7 +215,7 @@
 
 	</dependencies>
 
-
+	<!-- 将程序打包成一个可执行jar -->
 	<build>
 		<plugins>
 			<plugin>
