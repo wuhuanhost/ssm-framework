@@ -8,5 +8,8 @@
 		<typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
 		<typeAlias alias="ArrayList" type="java.util.ArrayList" />
 		<typeAlias alias="LinkedList" type="java.util.LinkedList" />
+		<!-- UserMapper.xml中resultType 配置的别名 -->
+		<typeAlias type="com.geekfanfan.think.entity.User" alias="User" />
 	</typeAliases>
+
 </configuration>

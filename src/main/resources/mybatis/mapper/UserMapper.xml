@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geekfanfan.think.mapper.UserMapper">
-    <select id="listAll" resultType="com.geekfanfan.think.entity.User">
+    <!-- 这里的resultType="User"使用的是别名，具体对应的java entiy类配置正在config.xml中 -->
+    <!-- <select id="listAll" resultType="com.geekfanfan.think.entity.User"> -->
+    <select id="listAll" resultType="User">
         SELECT * FROM user
     </select>
 

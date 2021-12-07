@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geekfanfan.think.mapper.AdminMapper">
+	<select id="queryAdmins" resultMap="adminMap">
+		select     
+		ta.id as 'admin_id',
+		ta.account as 'admin_account',
+		ta.password as 'admin_password',
+		ta.email as 'admin_email',
+		ta.phone as 'admin_phone',
+		ta.status as 'admin_status',
+		ta.token as 'admin_token',
+		tr.id as 'role_id',
+		tr.name as 'role_name',
+		tr.status as 'role_status',
+		tr.order as 'role_order',
+		tr.remark as 'role_remark',
+		tar.id as 'admin_role_id',
+		tar.admin_id as 'admin_role_admin_id',
+		tar.role_id as 'admin_role_role_id'
+		FROM
+		t_admin ta 
+		LEFT outer  JOIN t_admin_role  tar on ta.id=tar.admin_id
+		LEFT outer  JOIN t_role  tr on tr.id=tar.role_id
+		<!-- WHERE ta.id=1 -->
+	</select>
+
+	<resultMap type="com.geekfanfan.think.entity.Admin" id="adminMap">
+		<id property="id" column="admin_id" />
+		<!--映射需要显示的字段 -->
+		<result property="account" column="admin_account" />
+		<result property="phone" column="admin_phone" />
+		<result property="email" column="admin_email" />
+		<collection property="roles" ofType="com.geekfanfan.think.entity.Role">
+			<id property="id" column="role_id"></id>
+			<!--映射需要显示的字段 -->
+			<result property="name" column="role_name"></result>
+			<result property="remark" column="role_remark"></result>
+		</collection>
+	</resultMap>
+
+
+</mapper>
