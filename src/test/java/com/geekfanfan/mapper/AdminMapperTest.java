@@ -48,7 +48,7 @@ public class AdminMapperTest {
 
 		for (Admin admin : admins) {
 			log.info("==========================================================>");
-			log.info(admin.getAccount());
+			log.info(admin.getUsername());
 			log.info("用户的角色为:");
 			List<Role> roles = admin.roles;
 			for (Role role : roles) {

@@ -4,7 +4,7 @@
 	<select id="queryAdmins" resultMap="adminMap">
 		select     
 		ta.id as 'admin_id',
-		ta.account as 'admin_account',
+		ta.username as 'admin_username',
 		ta.password as 'admin_password',
 		ta.email as 'admin_email',
 		ta.phone as 'admin_phone',
@@ -28,7 +28,7 @@
 	<resultMap type="com.geekfanfan.think.entity.Admin" id="adminMap">
 		<id property="id" column="admin_id" />
 		<!--映射需要显示的字段 -->
-		<result property="account" column="admin_account" />
+		<result property="username" column="admin_username" />
 		<result property="phone" column="admin_phone" />
 		<result property="email" column="admin_email" />
 		<collection property="roles" ofType="com.geekfanfan.think.entity.Role">
