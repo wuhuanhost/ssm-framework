@@ -33,12 +33,13 @@ public class JWTInterceptor implements HandlerInterceptor {
 	 * 拦截请求，访问controll之前
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		System.out.println(request);
 		String token = request.getHeader("token");
 		String access_token = request.getHeader("access-token");
 		log.info("access_token:" + access_token);
 		if (StringUtils.isEmpty(token)) {
 			// throw new MyException("token不能为空");
-			Asserts.error("token不能为空123");
+			Asserts.error("token不能为空");
 			return false;
 		}
 		try {

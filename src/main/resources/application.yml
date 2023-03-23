@@ -1,6 +1,15 @@
 spring:
   ############################################################
   #
+  # 配置spring-security
+  #
+  ############################################################
+  security:
+      user:
+        name: admin
+        password: 123456
+  ############################################################
+  #
   # 配置数据源信息
   #
   ############################################################
@@ -8,7 +17,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     # type: com.zaxxer.hikari.HikariDataSource #数据远类型为HicariCP
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.123:3306/test1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/test1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true
     username: root
     password: root
     continue-on-error: true

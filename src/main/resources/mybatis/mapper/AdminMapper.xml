@@ -4,7 +4,7 @@
 	<select id="queryAdmins" resultMap="adminMap">
 		select     
 		ta.id as 'admin_id',
-		ta.username as 'admin_username',
+		ta.account as 'admin_username',
 		ta.password as 'admin_password',
 		ta.email as 'admin_email',
 		ta.phone as 'admin_phone',

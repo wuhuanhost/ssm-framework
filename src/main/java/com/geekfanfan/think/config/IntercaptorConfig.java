@@ -19,7 +19,7 @@ import java.util.List;
 import com.geekfanfan.think.controller.interceptor.JWTInterceptor;
 
 /**
- * 拦截器配置，拦截所有的url请求
+ * 拦截器配置，拦截所有的url请求，拦截器在过滤器之后执行
  * 
  * @author
  */
